@@ -75,3 +75,26 @@ class LibrarySystem:
             print("History data loaded successfully!")
         else:
             print("No saved data found, starting with default books.")
+
+    # Add User
+    def add_user(self, username, section):
+        if username not in self.users:
+            self.users[username] = {"section": section, "borrowed_books": []}
+            print(f"User '{username}' from Section '{section}' added successfully!")
+            self.save_data()  # Save data after changes
+        else:
+            print("User already exists.")
+
+    # Add Book
+    def add_book(self, book_id, title, author, copies, publish_year):
+        if book_id not in self.books:
+            self.books[book_id] = {
+                "title": title,
+                "author": author,
+                "copies": copies,
+                "publish_year": publish_year,
+            }
+            print(f"Book '{title}' added successfully!")
+            self.save_data()  # Save data after changes
+        else:
+            print("Book already exists.")
