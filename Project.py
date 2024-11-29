@@ -98,3 +98,34 @@ class LibrarySystem:
             self.save_data()  # Save data after changes
         else:
             print("Book already exists.")
+
+    # Borrow Book
+    def borrow_book(self, username, book_id, quantity, return_date):
+        if username not in self.users:
+            print("User not found. Please add the user first.")
+            return
+
+        if book_id in self.books and self.books[book_id]["copies"] >= quantity:
+            self.books[book_id]["copies"] -= quantity
+            borrow_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.users[username]["borrowed_books"].append({
+                "book_id": book_id,
+                "quantity": quantity,
+                "borrow_date": borrow_date,
+                "return_date": return_date,
+                "remarks": "Borrowed",
+            })
+            self.history.append({
+                "username": username,
+                "book_id": book_id,
+                "quantity": quantity,
+                "borrow_date": borrow_date,
+                "return_date": return_date,
+                "remarks": "Borrowed",
+            })
+            print(f"Book '{self.books[book_id]['title']}' borrowed successfully!")
+            self.save_data()  # Save data after changes
+        else:
+            print("Not enough copies available or book does not exist.")
+
+ 
